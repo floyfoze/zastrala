@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кейсы: Мемы, Какашки и Блоки</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+        
+        .cases-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .case {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .case:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .case-memes {
+            border: 3px solid #ff6b6b;
+        }
+        
+        .case-poop {
+            border: 3px solid #8d5524;
+        }
+        
+        .case-blocks {
+            border: 3px solid #3498db;
+        }
+        
+        .case-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .case-memes .case-title {
+            color: #ff6b6b;
+        }
+        
+        .case-poop .case-title {
+            color: #8d5524;
+        }
+        
+        .case-blocks .case-title {
+            color: #3498db;
+        }
+        
+        .case-image {
+            width: 100%;
+            height: 150px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 15px;
+        }
+        
+        .case-info {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        .open-btn {
+            background: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .open-btn:hover {
+            background: #ffdd33;
+            transform: scale(1.05);
+        }
+        
+        .result-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+        
+        .result-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .result-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .item-info {
+            text-align: left;
+        }
+        
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .item-rarity {
+            font-size: 0.9rem;
+            color: #ffcc00;
+        }
+        
+        .luck {
+            color: #4cd964;
+        }
+        
+        .bad-luck {
+            color: #ff3b30;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .case-counter {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Коллекция кейсов</h1>
+        <p>Открывайте кейсы и получайте уникальные предметы!</p>
+    </header>
+    
+    <div class="cases-container">
+        <div class="case case-memes" onclick="openCase('memes')">
+            <h2 class="case-title">Кейс с мемами</h2>
+            <div class="case-image" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22 viewBox=%220 0 100 100%22><text x=%2250%22 y=%2250%22 font-size=%2250%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ff6b6b%22>😂</text></svg>')"></div>
+            <div class="case-info">Содержит 30 различных мемов с разной редкостью</div>
+            <button class="open-btn">Открыть за 100 ₽</button>
+            <div class="case-counter">Открыто: <span id="memes-count">0</span></div>
+        </div>
+        
+        <div class="case case-poop" onclick="openCase('poop')">
+            <h2 class="case-title">Кейс с какашками</h2>
+            <div class="case-image" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22 viewBox=%220 0 100 100%22><text x=%2250%22 y=%2250%22 font-size=%2250%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%238d5524%22>💩</text></svg>')"></div>
+            <div class="case-info">Разноцветные какашки с различными эффектами</div>
+            <button class="open-btn">Открыть за 100 ₽</button>
+            <div class="case-counter">Открыто: <span id="poop-count">0</span></div>
+        </div>
+        
+        <div class="case case-blocks" onclick="openCase('blocks')">
+            <h2 class="case-title">Кейс с блоками</h2>
+            <div class="case-image" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22 viewBox=%220 0 100 100%22><rect x=%2220%22 y=%2220%22 width=%2260%22 height=%2260%22 fill=%22%233498db%22 stroke=%22%23156fa0%22 stroke-width=%222%22 /></svg>')"></div>
+            <div class="case-info">Блоки из Майнкрафта с разной редкостью</div>
+            <button class="open-btn">Открыть за 100 ₽</button>
+            <div class="case-counter">Открыто: <span id="blocks-count">0</span></div>
+        </div>
+    </div>
+    
+    <div id="result" class="result-container hidden">
+        <h2 class="result-title">Результат открытия</h2>
+        <div class="result-content">
+            <div class="result-item">
+                <div class="item-image" id="result-image"></div>
+                <div class="item-info">
+                    <div class="item-name" id="result-name">Название предмета</div>
+                    <div class="item-rarity" id="result-rarity">Редкость: <span id="rarity-value">Обычный</span></div>
+                    <div id="result-luck">Удача: <span id="luck-value">0%</span></div>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="total-opened">0</div>
+                    <div class="stat-label">Всего открыто</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="total-luck">0%</div>
+                    <div class="stat-label">Общая удача</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="total-spent">0</div>
+                    <div class="stat-label">Потрачено ₽</div>
+                </div>
+            </div>
+            
+            <button class="open-btn" onclick="closeResult()">Открыть еще кейс</button>
+        </div>
+    </div>
+
+    <script>
+        // Данные для кейсов
+        const caseData = {
+            memes: {
+                items: [
+                    { name: "Доге", rarity: "Обычный", luck: 5, image: "🐕" },
+                    { name: "Ждун", rarity: "Обычный", luck: 5, image: "👁️" },
+                    { name: "Йода", rarity: "Обычный", luck: 5, image: "👽" },
+                    { name: "Смайлик", rarity: "Обычный", luck: 5, image: "😀" },
+                    { name: "Кот в очках", rarity: "Обычный", luck: 5, image: "🐱" },
+                    { name: "Сова", rarity: "Обычный", luck: 5, image: "🦉" },
+                    { name: "Печальный кот", rarity: "Обычный", luck: 5, image: "😿" },
+                    { name: "Удивленная Пикачу", rarity: "Редкий", luck: 10, image: "⚡" },
+                    { name: "Мем с котиком", rarity: "Редкий", luck: 10, image: "🐾" },
+                    { name: "Стивен Хокинг", rarity: "Редкий", luck: 10, image: "🧠" },
+                    { name: "Умная собака", rarity: "Редкий", luck: 10, image: "🎓" },
+                    { name: "Смеющийся смайл", rarity: "Редкий", luck: 10, image: "😂" },
+                    { name: "Плюющийся кот", rarity: "Редкий", luck: 10, image: "😾" },
+                    { name: "Мем с уточкой", rarity: "Редкий", luck: 10, image: "🦆" },
+                    { name: "Джонни Депп", rarity: "Эпический", luck: 15, image: "🎩" },
+                    { name: "Леонардо ДиКаприо", rarity: "Эпический", luck: 15, image: "🍷" },
+                    { name: "Мем с пандой", rarity: "Эпический", luck: 15, image: "🐼" },
+                    { name: "Умная птица", rarity: "Эпический", luck: 15, image: "🦜" },
+                    { name: "Кричащий козел", rarity: "Эпический", luck: 15, image: "🐐" },
+                    { name: "Мем с лягушкой", rarity: "Эпический", luck: 15, image: "🐸" },
+                    { name: "Черепаха в шапке", rarity: "Легендарный", luck: 20, image: "🐢" },
+                    { name: "Альберт Эйнштейн", rarity: "Легендарный", luck: 20, image: "👨‍🔬" },
+                    { name: "Никола Тесла", rarity: "Легендарный", luck: 20, image: "⚡" },
+                    { name: "Мем с единорогом", rarity: "Легендарный", luck: 20, image: "🦄" },
+                    { name: "Корги", rarity: "Легендарный", luck: 20, image: "🐶" },
+                    { name: "Философский кот", rarity: "Легендарный", luck: 20, image: "😼" },
+                    { name: "Мем с китом", rarity: "Мифический", luck: 25, image: "🐋" },
+                    { name: "Райан Гослинг", rarity: "Мифический", luck: 25, image: "👔" },
+                    { name: "Галактический кот", rarity: "Мифический", luck: 25, image: "🐈‍⬛" },
+                    { name: "Харли Квинн", rarity: "Мифический", luck: 25, image: "🎭" }
+                ],
+                opened: 0
+            },
+            poop: {
+                items: [
+                    { name: "Обычная какашка", rarity: "Обычный", luck: -5, image: "💩" },
+                    { name: "Черная какашка", rarity: "Обычный", luck: -5, image: "🖤" },
+                    { name: "Красная какашка", rarity: "Обычный", luck: -5, image: "❤️" },
+                    { name: "Синяя какашка", rarity: "Обычный", luck: -5, image: "💙" },
+                    { name: "Зеленая какашка", rarity: "Обычный", luck: -5, image: "💚" },
+                    { name: "Желтая какашка", rarity: "Обычный", luck: -5, image: "💛" },
+                    { name: "Фиолетовая какашка", rarity: "Обычный", luck: -5, image: "💜" },
+                    { name: "Розовая какашка", rarity: "Редкий", luck: -10, image: "💖" },
+                    { name: "Оранжевая какашка", rarity: "Редкий", luck: -10, image: "🧡" },
+                    { name: "Коричневая какашка", rarity: "Редкий", luck: -10, image: "🤎" },
+                    { name: "Белая какашка", rarity: "Редкий", luck: -10, image: "🤍" },
+                    { name: "Серебряная какашка", rarity: "Редкий", luck: -10, image: "🥈" },
+                    { name: "Золотая какашка", rarity: "Эпический", luck: -15, image: "🥇" },
+                    { name: "Бриллиантовая какашка", rarity: "Эпический", luck: -15, image: "💎" },
+                    { name: "Изумрудная какашка", rarity: "Эпический", luck: -15, image: "🟢" },
+                    { name: "Рубиновая какашка", rarity: "Эпический", luck: -15, image: "🔴" },
+                    { name: "Сапфировая какашка", rarity: "Эпический", luck: -15, image: "🔵" },
+                    { name: "Аметистовая какашка", rarity: "Эпический", luck: -15, image: "🟣" },
+                    { name: "Светящаяся какашка", rarity: "Легендарный", luck: -20, image: "✨" },
+                    { name: "Радужная какашка", rarity: "Легендарный", luck: -20, image: "🌈" },
+                    { name: "Огненная какашка", rarity: "Легендарный", luck: -20, image: "🔥" },
+                    { name: "Ледяная какашка", rarity: "Легендарный", luck: -20, image: "❄️" },
+                    { name: "Электрическая какашка", rarity: "Легендарный", luck: -20, image: "⚡" },
+                    { name: "Водяная какашка", rarity: "Легендарный", luck: -20, image: "💧" },
+                    { name: "Воздушная какашка", rarity: "Легендарный", luck: -20, image: "💨" },
+                    { name: "Земляная какашка", rarity: "Легендарный", luck: -20, image: "🌍" },
+                    { name: "Космическая какашка", rarity: "Мифический", luck: -25, image: "🚀" },
+                    { name: "Временная какашка", rarity: "Мифический", luck: -25, image: "⏳" },
+                    { name: "Магическая какашка", rarity: "Мифический", luck: -25, image: "🔮" },
+                    { name: "Божественная какашка", rarity: "Мифический", luck: -25, image: "👼" }
+                ],
+                opened: 0
+            },
+            blocks: {
+                items: [
+                    { name: "Земля", rarity: "Обычный", luck: 3, image: "🟫" },
+                    { name: "Камень", rarity: "Обычный", luck: 3, image: "🪨" },
+                    { name: "Дерево", rarity: "Обычный", luck: 3, image: "🪵" },
+                    { name: "Песок", rarity: "Обычный", luck: 3, image: "🟨" },
+                    { name: "Гравий", rarity: "Обычный", luck: 3, image: "⛰️" },
+                    { name: "Угольная руда", rarity: "Обычный", luck: 3, image: "⚫" },
+                    { name: "Железная руда", rarity: "Обычный", luck: 3, image: "🩶" },
+                    { name: "Золотая руда", rarity: "Редкий", luck: 6, image: "🟨" },
+                    { name: "Медь", rarity: "Редкий", luck: 6, image: "🟧" },
+                    { name: "Лазурит", rarity: "Редкий", luck: 6, image: "🔵" },
+                    { name: "Кирпич", rarity: "Редкий", luck: 6, image: "🧱" },
+                    { name: "Песчаник", rarity: "Редкий", luck: 6, image: "🏜️" },
+                    { name: "Обсидиан", rarity: "Эпический", luck: 9, image: "⬛" },
+                    { name: "Алмазная руда", rarity: "Эпический", luck: 9, image: "💎" },
+                    { name: "Изумрудная руда", rarity: "Эпический", luck: 9, image: "💚" },
+                    { name: "Незерит", rarity: "Эпический", luck: 9, image: "🟩" },
+                    { name: "Кварц", rarity: "Эпический", luck: 9, image: "⬜" },
+                    { name: "Призмарин", rarity: "Эпический", luck: 9, image: "🟦" },
+                    { name: "Светящийся камень", rarity: "Легендарный", luck: 12, image: "💡" },
+                    { name: "Морской фонарь", rarity: "Легендарный", luck: 12, image: "🔆" },
+                    { name: "Пчелиные соты", rarity: "Легендарный", luck: 12, image: "🍯" },
+                    { name: "Душовый песок", rarity: "Легендарный", luck: 12, image: "😈" },
+                    { name: "Нetherrack", rarity: "Легендарный", luck: 12, image: "🔥" },
+                    { name: "Эндский камень", rarity: "Легендарный", luck: 12, image: "🔶" },
+                    { name: "Пурпурный блок", rarity: "Легендарный", luck: 12, image: "🟣" },
+                    { name: "Блок дракона", rarity: "Мифический", luck: 15, image: "🐉" },
+                    { name: "Блок маяка", rarity: "Мифический", luck: 15, image: "⎈" },
+                    { name: "Блок командного блока", rarity: "Мифический", luck: 15, image: "📦" },
+                    { name: "Блок спавнера", rarity: "Мифический", luck: 15, image: "🐷" },
+                    { name: "Бедрок", rarity: "Мифический", luck: 15, image: "⛏️" }
+                ],
+                opened: 0
+            }
+        };
+
+        let totalOpened = 0;
+        let totalLuck = 0;
+        let totalSpent = 0;
+
+        // Функция открытия кейса
+        function openCase(type) {
+            const caseItems = caseData[type].items;
+            const weights = {
+                "Обычный": 50,
+                "Редкий": 25,
+                "Эпический": 15,
+                "Легендарный": 7,
+                "Мифический": 3
+            };
+            
+            // Вычисляем общий вес
+            let totalWeight = 0;
+            for (const item of caseItems) {
+                totalWeight += weights[item.rarity];
+            }
+            
+            // Выбираем случайный предмет с учетом веса
+            let random = Math.random() * totalWeight;
+            let selectedItem;
+            
+            for (const item of caseItems) {
+                random -= weights[item.rarity];
+                if (random <= 0) {
+                    selectedItem = item;
+                    break;
+                }
+            }
+            
+            // Обновляем статистику
+            caseData[type].opened++;
+            totalOpened++;
+            totalLuck += selectedItem.luck;
+            totalSpent += 100;
+            
+            // Показываем результат
+            document.getElementById('result-image').style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 100 100%22><text x=%2250%22 y=%2250%22 font-size=%2250%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ffffff%22>${selectedItem.image}</text></svg>')`;
+            document.getElementById('result-name').textContent = selectedItem.name;
+            document.getElementById('rarity-value').textContent = selectedItem.rarity;
+            document.getElementById('luck-value').textContent = selectedItem.luck > 0 ? `+${selectedItem.luck}%` : `${selectedItem.luck}%`;
+            document.getElementById('luck-value').className = selectedItem.luck > 0 ? 'luck' : 'bad-luck';
+            
+            document.getElementById('total-opened').textContent = totalOpened;
+            document.getElementById('total-luck').textContent = (totalLuck / totalOpened).toFixed(1) + '%';
+            document.getElementById('total-spent').textContent = totalSpent;
+            
+            // Обновляем счетчики кейсов
+            document.getElementById(`${type}-count`).textContent = caseData[type].opened;
+            
+            // Показываем результат
+            document.getElementById('result').classList.remove('hidden');
+        }
+
+        // Функция закрытия результата
+        function closeResult() {
+            document.getElementById('result').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
